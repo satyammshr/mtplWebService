@@ -9,10 +9,13 @@ const provinces = require('./routes/provincesRoutes/provinceRoute')
 const mtpl = require("./routes/mtplRoutes/mtplRoutes")
 const setup = require("./routes/setupRoutes/setupDbroutes")
 
-var corsOptions = {
-  origin: "http://localhost:3001"
-};
+// var corsOptions = {
+//   origin: "http://localhost:3001"
+// };
 
+var corsOptions = {
+  origin : ["*", "http://13.127.38.123"]
+};
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
@@ -33,7 +36,7 @@ app.get("/", (req, res) => {
 });
 
 // set port, listen for requests
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

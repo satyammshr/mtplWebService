@@ -4,39 +4,75 @@ var errorFormat = require("../../../resources/format/error.json")
 const bcrypt = require('bcryptjs');
 const authUtils = require("../../utils/authUtils");
 const User = db.users;
+const collection=require('../../mongomodels/userModel.js');
 
 
+
+// function createUserfirst(req, res) {
+//     userData = req.body;
+//     if (userData.password != userData.confirmPassword) {
+//         errorFormat.error = "Passwords do not match"
+//         res.status(400).send(errorFormat)
+//     } else {
+//         userData.password = bcrypt.hashSync(req.body.password, 10);
+//         User.create(userData).then(async data => {
+//         dataFormat.data = data
+//         var userId = await User.findAll({
+//             attributes: ['id'],
+//             where: { email: req.body.email }
+//         })
+//         dataFormat.data.id = userId[0].id;
+//         // JWT token generation 
+//         var userData = {
+//             id: dataFormat.data.id,
+//         };
+//         var token = authUtils.generateJWTToken({ userData }); // email , mobile not required for JWT
+//         userData.token = token
+//         userData.email =  dataFormat.data.email
+        
+//         res.status(200).send(userData); // id,mobile not required 
+//     }).catch(err => {
+//             errorFormat.error = err || "Some error occur while creating user."
+//             res.status(400).send(errorFormat);
+//         });
+//     }
+    
+// }
 
 function createUserfirst(req, res) {
     userData = req.body;
+    console.log('1--------------1')
     if (userData.password != userData.confirmPassword) {
         errorFormat.error = "Passwords do not match"
         res.status(400).send(errorFormat)
+        
     } else {
         userData.password = bcrypt.hashSync(req.body.password, 10);
-        User.create(userData).then(async data => {
-        dataFormat.data = data
-        var userId = await User.findAll({
-            attributes: ['id'],
-            where: { email: req.body.email }
-        })
-        dataFormat.data.id = userId[0].id;
-        // JWT token generation 
-        var userData = {
-            id: dataFormat.data.id,
-        };
-        var token = authUtils.generateJWTToken({ userData }); // email , mobile not required for JWT
-        userData.token = token
-        userData.email =  dataFormat.data.email
-        
-        res.status(200).send(userData); // id,mobile not required 
-    }).catch(err => {
-            errorFormat.error = err || "Some error occur while creating user."
-            res.status(400).send(errorFormat);
-        });
-    }
+        return collection.getUsersCollection().then((userDetails)=>{
+            return userDetails.insertMany(userData).then(async (data) =>{
+
+            var userId = collection.findOne({ email: req.body.email })
+            console.log(userId);
+            
+            dataFormat.data.id = userId[0].id;
+            // JWT token generation 
+            var userData = {
+                id: dataFormat.data.id,
+            };
+            var token = authUtils.generateJWTToken({ userData }); // email , mobile not required for JWT
+            userData.token = token
+            userData.email =  dataFormat.data.email
+            
+            res.status(200).send(userData); // id,mobile not required 
+         })}).catch(err => {
+                errorFormat.error = err || "Some error occur while creating user."
+                res.status(400).send(errorFormat);
+            });
+        }
     
 }
+
+
 
 function loginUser(req,res) {
     User.findOne({
