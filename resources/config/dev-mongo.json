@@ -1,8 +1,8 @@
 {
     
-    "host": "localhost",
-    "database": "InsuranceDB",
-    "user": "",
-    "password": "",
-    "port": "27017"
+    "HOST": "localhost",
+    "DATABASE": "InsuranceDB",
+    "USER": "",
+    "PASSWORD": "",
+    "PORT": "27017"
 }

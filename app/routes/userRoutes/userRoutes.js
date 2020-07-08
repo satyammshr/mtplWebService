@@ -5,7 +5,7 @@ const auth = require("../../services/auth")
  
 
 //to get individual user  details by email of user
-router.get("/", auth.isValidRequest , userController.findUserID);
+router.post("/", auth.isValidRequest , userController.findUserID);
 
 //To Create User using email and password and assign token to it.
  
