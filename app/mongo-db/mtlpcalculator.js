@@ -28,7 +28,9 @@ const mtplCalculatorSchema = Schema({
     additionalCover: {
         type:{ type: String, required: true,enum:["None","Premium","VIP"] },
         price:{type: Number, required: true}
-    }
+    },
+    user_id:{type: String, required: true}
+
 }, { collection: "mtpCalculator" });
 
 module.exports =  mongoose.model('MTPLCalculatorSchema', mtplCalculatorSchema);

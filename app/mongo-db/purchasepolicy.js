@@ -17,7 +17,8 @@ const purchasepolicySchema = Schema({
     },
     vehicleOwnerInformation: {
         q:{ type: String, required: true},
-    }
+    },
+    user_id:{type: String, required: true}
 }, { collection: "purchasepolicy" });
 
 

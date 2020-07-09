@@ -11,12 +11,28 @@ const MTPLCalculator = require("./mtlpcalculator");
 
 
 //connection url
-const url = "mongodb://localhost:27017/InsuranceDB";
-
+// = "mongodb://localhost:27017/InsuranceDB";
+const url = "mongodb+srv://DB_Master:Summer01@cluster0.eodxz.mongodb.net/DZI_DB?retryWrites=true&w=majority";
 
 
 // to connect
-mongoose.connect(url);
+// const uri = “YOUR CONNECTION STRING“;
+mongoose.connect(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => {
+  console.log("MongoDB Connected…");
+})
+.catch(err => console.log(err))
+
+
+
+
+
+
+
+
 //if error
 mongoose.connection.on('error', () => {
   throw new Error(`unable to connect to database: ${url}`);

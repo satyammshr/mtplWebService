@@ -8,9 +8,9 @@ const auth = require("../../services/auth")
 
 //to post data
 router.post("/postmtplCalculator", mtplCalculator.postMtplCalculator);
-router.post("/getmtplCalculator", mtplCalculator.getMtplCalculator)
+router.post("/getmtplCalculator", auth.isValidRequest ,mtplCalculator.getMtplCalculator)
 router.post("/postPurchasePolicy", purchasePolicy.postPurchasePolicy)
-router.post("/getPurchasePolicy", purchasePolicy.getPurhasePolicy)
+router.post("/getPurchasePolicy", auth.isValidRequest ,purchasePolicy.getPurhasePolicy)
 router.get("/getInstallmentOptions",installment.getInstallmentOptions)
 
 

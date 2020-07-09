@@ -123,34 +123,23 @@ const provinces = [
 
 
 operations.setupdb = () =>{
-    return db.mtplCalculator().then((mtpdetails)=>{
-        return mtpdetails.deleteMany().then(()=>{
-            return db.users().then((userdetails)=>{
-                return userdetails.deleteMany().then(()=>{
-                    return db.purchasePolicy().then((purchasedetails)=>{
-                        return purchasedetails.deleteMany().then(()=>{
-                            return db.provinces().then((details)=>{
-                                return details.deleteMany().then(()=>{
-                                    return details.insertMany(provinces).then((data)=>{
-                                    if(data){
-                                        console.log(data)
-                                        return "DB setup Succcessful"
-                                    }
-                                    else{
-                                        let err=new Error("DB setup Failed");
-                                        err.status=400;
-                                        throw err;
-                                    }
-                                })})
-                            })
+    
+    return db.provinces().then((details)=>{
+        return details.deleteMany().then(()=>{
+            return details.insertMany(provinces).then((data)=>{
+            if(data){
+                console.log(data)
+                return "DB setup Succcessful"
+            }
+            else{
+                let err=new Error("DB setup Failed");
+                err.status=400;
+                throw err;
+            }
+        })})
+    })
 
-                        })                    })
-                })
-            })
-        })
-   
-
-})
+              
 }
 
 module.exports = operations;
